@@ -1,5 +1,5 @@
 <mujoco model="google_64k scene">
-  <include file="model.xml"/>
+  <include file="014_lemon_model.xml"/>
 
   <option>
     <flag multiccd="enable"/>
