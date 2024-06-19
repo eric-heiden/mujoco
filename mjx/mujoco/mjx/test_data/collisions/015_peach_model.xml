@@ -1,5 +1,5 @@
 <mujoco model="015_peach">
-  <compiler assetdir="meshes" 015_peach_texturedir="materials"/>
+  <compiler assetdir="meshes" texturedir="materials"/>
 
   <asset>
     <texture type="2d" name="texture" file="015_peach_texture_map.png"/>
