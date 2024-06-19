@@ -1,0 +1,274 @@
+<mujoco model="ycb_scene">
+  <compiler assetdir="meshes" texturedir="materials"/>
+
+  <option iterations="8" ls_iterations="8">
+    <flag eulerdamp="disable"/>
+  </option>
+
+  <asset>
+    <!-- bowl -->
+    <texture type="2d" name="bowl_texture" file="024_bowl_texture_map.png"/>
+    <material name="bowl_texture" texture="bowl_texture"/>
+    <mesh scale="2 2 2" file="024_bowl_textured.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_000.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_001.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_002.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_003.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_004.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_005.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_006.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_007.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_008.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_009.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_010.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_011.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_012.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_013.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_014.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_015.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_016.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_017.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_018.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_019.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_020.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_021.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_022.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_023.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_024.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_025.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_026.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_027.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_028.obj"/>
+    <mesh scale="2 2 2" file="024_bowl_coacd_part_029.obj"/>
+    <!-- banana -->
+    <texture type="2d" name="banana_texture" file="011_banana_texture_map.png"/>
+    <material name="banana_texture" texture="banana_texture"/>
+    <mesh file="011_banana_textured.obj"/>
+    <mesh file="011_banana_coacd_part_000.obj"/>
+    <mesh file="011_banana_coacd_part_001.obj"/>
+    <mesh file="011_banana_coacd_part_002.obj"/>
+    <mesh file="011_banana_coacd_part_003.obj"/>
+    <!-- apple -->
+    <texture type="2d" name="apple_texture" file="013_apple_texture_map.png"/>
+    <material name="apple_texture" texture="apple_texture"/>
+    <mesh file="013_apple_textured.obj"/>
+    <mesh file="013_apple_coacd_part_000.obj"/>
+    <mesh file="013_apple_coacd_part_001.obj"/>
+    <mesh file="013_apple_coacd_part_002.obj"/>
+    <mesh file="013_apple_coacd_part_003.obj"/>
+    <mesh file="013_apple_coacd_part_004.obj"/>
+    <mesh file="013_apple_coacd_part_005.obj"/>
+    <mesh file="013_apple_coacd_part_006.obj"/>
+    <mesh file="013_apple_coacd_part_007.obj"/>
+    <mesh file="013_apple_coacd_part_008.obj"/>
+    <mesh file="013_apple_coacd_part_009.obj"/>
+    <mesh file="013_apple_coacd_part_010.obj"/>
+    <mesh file="013_apple_coacd_part_011.obj"/>
+    <mesh file="013_apple_coacd_part_012.obj"/>
+    <!-- plum -->
+    <texture type="2d" name="plum_texture" file="018_plum_texture_map.png"/>
+    <material name="plum_texture" texture="plum_texture"/>
+    <mesh file="018_plum_textured.obj"/>
+    <mesh file="018_plum_coacd_part_000.obj"/>
+    <mesh file="018_plum_coacd_part_001.obj"/>
+    <mesh file="018_plum_coacd_part_002.obj"/>
+    <mesh file="018_plum_coacd_part_003.obj"/>
+    <mesh file="018_plum_coacd_part_004.obj"/>
+    <mesh file="018_plum_coacd_part_005.obj"/>
+    <mesh file="018_plum_coacd_part_006.obj"/>
+    <mesh file="018_plum_coacd_part_007.obj"/>
+    <mesh file="018_plum_coacd_part_008.obj"/>
+    <mesh file="018_plum_coacd_part_009.obj"/>
+    <!-- pear -->
+    <texture type="2d" name="pear_texture" file="016_pear_texture_map.png"/>
+    <material name="pear_texture" texture="pear_texture"/>
+    <mesh file="016_pear_textured.obj"/>
+    <mesh file="016_pear_coacd_part_000.obj"/>
+    <mesh file="016_pear_coacd_part_001.obj"/>
+    <!-- peach -->
+    <texture type="2d" name="peach_texture" file="015_peach_texture_map.png"/>
+    <material name="peach_texture" texture="peach_texture"/>
+    <mesh file="015_peach_textured.obj"/>
+    <mesh file="015_peach_coacd_part_000.obj"/>
+    <mesh file="015_peach_coacd_part_001.obj"/>
+    <mesh file="015_peach_coacd_part_002.obj"/>
+    <mesh file="015_peach_coacd_part_003.obj"/>
+    <mesh file="015_peach_coacd_part_004.obj"/>
+    <mesh file="015_peach_coacd_part_005.obj"/>
+    <mesh file="015_peach_coacd_part_006.obj"/>
+    <mesh file="015_peach_coacd_part_007.obj"/>
+    <mesh file="015_peach_coacd_part_008.obj"/>
+    <mesh file="015_peach_coacd_part_009.obj"/>
+    <mesh file="015_peach_coacd_part_010.obj"/>
+    <mesh file="015_peach_coacd_part_011.obj"/>
+    <mesh file="015_peach_coacd_part_012.obj"/>
+    <mesh file="015_peach_coacd_part_013.obj"/>
+  </asset>
+
+  <default>
+    <mesh maxhullvert="64"/>
+    <default class="024_bowl">
+      <default class="visual_024_bowl">
+        <geom type="mesh" group="2" density="200" contype="0" conaffinity="0" material="bowl_texture"/>
+      </default>
+      <default class="collision_024_bowl">
+        <geom type="mesh" group="3" mass="0" density="0" solref=".004 1" friction="1.0 0.01 0.01" condim="6"/>
+      </default>
+    </default>
+    <default class="011_banana">
+      <default class="visual_011_banana">
+        <geom type="mesh" group="2" density="200" contype="0" conaffinity="0" material="banana_texture"/>
+      </default>
+      <default class="collision_011_banana">
+        <geom type="mesh" group="3" mass="0" density="0" solref=".004 1" friction="1.0 0.01 0.01" condim="6"/>
+      </default>
+    </default>
+    <default class="013_apple">
+      <default class="visual_013_apple">
+        <geom type="mesh" group="2" density="200" contype="0" conaffinity="0" material="apple_texture"/>
+      </default>
+      <default class="collision_013_apple">
+        <geom type="mesh" group="3" mass="0" density="0" solref=".004 1" friction="1.0 0.01 0.01" condim="6"/>
+      </default>
+    </default>
+    <default class="018_plum">
+      <default class="visual_018_plum">
+        <geom type="mesh" group="2" density="200" contype="0" conaffinity="0" material="plum_texture"/>
+      </default>
+      <default class="collision_018_plum">
+        <geom type="mesh" group="3" mass="0" density="0" solref=".004 1" friction="1.0 0.01 0.01" condim="6"/>
+      </default>
+    </default>
+    <default class="016_pear">
+      <default class="visual_016_pear">
+        <geom type="mesh" group="2" density="200" contype="0" conaffinity="0" material="pear_texture"/>
+      </default>
+      <default class="collision_016_pear">
+        <geom type="mesh" group="3" mass="0" density="0" solref=".004 1" friction="1.0 0.01 0.01" condim="6"/>
+      </default>
+    </default>
+    <default class="015_peach">
+      <default class="visual_015_peach">
+        <geom type="mesh" group="2" density="200" contype="0" conaffinity="0" material="peach_texture"/>
+      </default>
+      <default class="collision_015_peach">
+        <geom type="mesh" group="3" mass="0" density="0" solref=".004 1" friction="1.0 0.01 0.01" condim="6"/>
+      </default>
+    </default>
+  </default>
+
+  <statistic center="0 0 0.1" extent="0.4" meansize="0.02"/>
+
+  <visual>
+    <headlight diffuse="0.6 0.6 0.6" ambient="0.3 0.3 0.3" specular="0 0 0"/>
+    <rgba haze="0.15 0.25 0.35 1"/>
+    <global azimuth="120" elevation="-10"/>
+  </visual>
+
+  <worldbody>
+    <light pos="0 0 1.5" directional="true"/>
+    <!-- bowl -->
+    <body childclass="024_bowl" pos="0 0 0.1">
+      <freejoint/>
+      <geom class="visual_024_bowl" mesh="024_bowl_textured"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_000" rgba="0.375 0.95 0.73 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_001" rgba="0.599 0.16 0.16 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_002" rgba="0.058 0.87 0.60 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_003" rgba="0.708 0.02 0.97 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_004" rgba="0.832 0.21 0.18 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_005" rgba="0.183 0.30 0.52 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_006" rgba="0.432 0.29 0.61 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_007" rgba="0.139 0.29 0.37 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_008" rgba="0.456 0.79 0.20 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_009" rgba="0.514 0.59 0.05 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_010" rgba="0.608 0.17 0.07 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_011" rgba="0.949 0.97 0.81 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_012" rgba="0.305 0.10 0.68 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_013" rgba="0.440 0.12 0.50 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_014" rgba="0.034 0.91 0.26 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_015" rgba="0.663 0.31 0.52 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_016" rgba="0.547 0.18 0.97 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_017" rgba="0.775 0.94 0.89 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_018" rgba="0.598 0.92 0.09 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_019" rgba="0.196 0.05 0.33 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_020" rgba="0.389 0.27 0.83 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_021" rgba="0.357 0.28 0.54 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_022" rgba="0.141 0.80 0.07 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_023" rgba="0.987 0.77 0.20 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_024" rgba="0.006 0.82 0.71 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_025" rgba="0.729 0.77 0.07 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_026" rgba="0.358 0.12 0.86 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_027" rgba="0.623 0.33 0.06 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_028" rgba="0.311 0.33 0.73 1"/>
+      <geom class="collision_024_bowl" mesh="024_bowl_coacd_part_029" rgba="0.638 0.89 0.47 1"/>
+    </body>
+    <!-- banana -->
+    <body childclass="011_banana" pos="0.1 -0.1 0.2">
+      <freejoint/>
+      <geom class="visual_011_banana" mesh="011_banana_textured"/>
+      <geom class="collision_011_banana" mesh="011_banana_coacd_part_000" rgba="0.375 0.95 0.73 1"/>
+      <geom class="collision_011_banana" mesh="011_banana_coacd_part_001" rgba="0.599 0.16 0.16 1"/>
+      <geom class="collision_011_banana" mesh="011_banana_coacd_part_002" rgba="0.058 0.87 0.60 1"/>
+      <geom class="collision_011_banana" mesh="011_banana_coacd_part_003" rgba="0.708 0.02 0.97 1"/>
+    </body>
+    <!-- apple -->
+    <body childclass="013_apple" pos="0 -0.2 0.2">
+      <freejoint/>
+      <geom class="visual_013_apple" mesh="013_apple_textured"/>
+      <geom class="collision_013_apple" mesh="013_apple_coacd_part_000" rgba="0.375 0.95 0.73 1"/>
+      <geom class="collision_013_apple" mesh="013_apple_coacd_part_001" rgba="0.599 0.16 0.16 1"/>
+      <geom class="collision_013_apple" mesh="013_apple_coacd_part_002" rgba="0.058 0.87 0.60 1"/>
+      <geom class="collision_013_apple" mesh="013_apple_coacd_part_003" rgba="0.708 0.02 0.97 1"/>
+      <geom class="collision_013_apple" mesh="013_apple_coacd_part_004" rgba="0.832 0.21 0.18 1"/>
+      <geom class="collision_013_apple" mesh="013_apple_coacd_part_005" rgba="0.183 0.30 0.52 1"/>
+      <geom class="collision_013_apple" mesh="013_apple_coacd_part_006" rgba="0.432 0.29 0.61 1"/>
+      <geom class="collision_013_apple" mesh="013_apple_coacd_part_007" rgba="0.139 0.29 0.37 1"/>
+      <geom class="collision_013_apple" mesh="013_apple_coacd_part_008" rgba="0.456 0.79 0.20 1"/>
+      <geom class="collision_013_apple" mesh="013_apple_coacd_part_009" rgba="0.514 0.59 0.05 1"/>
+      <geom class="collision_013_apple" mesh="013_apple_coacd_part_010" rgba="0.608 0.17 0.07 1"/>
+      <geom class="collision_013_apple" mesh="013_apple_coacd_part_011" rgba="0.949 0.97 0.81 1"/>
+      <geom class="collision_013_apple" mesh="013_apple_coacd_part_012" rgba="0.305 0.10 0.68 1"/>
+    </body>
+    <!-- plum -->
+    <body childclass="018_plum" pos="0 -0.1 0.2">
+      <freejoint/>
+      <geom class="visual_018_plum" mesh="018_plum_textured"/>
+      <geom class="collision_018_plum" mesh="018_plum_coacd_part_000" rgba="0.375 0.95 0.73 1"/>
+      <geom class="collision_018_plum" mesh="018_plum_coacd_part_001" rgba="0.599 0.16 0.16 1"/>
+      <geom class="collision_018_plum" mesh="018_plum_coacd_part_002" rgba="0.058 0.87 0.60 1"/>
+      <geom class="collision_018_plum" mesh="018_plum_coacd_part_003" rgba="0.708 0.02 0.97 1"/>
+      <geom class="collision_018_plum" mesh="018_plum_coacd_part_004" rgba="0.832 0.21 0.18 1"/>
+      <geom class="collision_018_plum" mesh="018_plum_coacd_part_005" rgba="0.183 0.30 0.52 1"/>
+      <geom class="collision_018_plum" mesh="018_plum_coacd_part_006" rgba="0.432 0.29 0.61 1"/>
+      <geom class="collision_018_plum" mesh="018_plum_coacd_part_007" rgba="0.139 0.29 0.37 1"/>
+      <geom class="collision_018_plum" mesh="018_plum_coacd_part_008" rgba="0.456 0.79 0.20 1"/>
+      <geom class="collision_018_plum" mesh="018_plum_coacd_part_009" rgba="0.514 0.59 0.05 1"/>
+    </body>
+    <!-- pear -->
+    <body childclass="016_pear" pos="0.1 0 0.2">
+      <freejoint/>
+      <geom class="visual_016_pear" mesh="016_pear_textured"/>
+      <geom class="collision_016_pear" mesh="016_pear_coacd_part_000" rgba="0.375 0.95 0.73 1"/>
+      <geom class="collision_016_pear" mesh="016_pear_coacd_part_001" rgba="0.599 0.16 0.16 1"/>
+    </body>
+    <!-- peach -->
+    <body childclass="015_peach" pos="-0.1 0 0.2">
+      <freejoint/>
+      <geom class="visual_015_peach" mesh="015_peach_textured"/>
+      <geom class="collision_015_peach" mesh="015_peach_coacd_part_000" rgba="0.375 0.95 0.73 1"/>
+      <geom class="collision_015_peach" mesh="015_peach_coacd_part_001" rgba="0.599 0.16 0.16 1"/>
+      <geom class="collision_015_peach" mesh="015_peach_coacd_part_002" rgba="0.058 0.87 0.60 1"/>
+      <geom class="collision_015_peach" mesh="015_peach_coacd_part_003" rgba="0.708 0.02 0.97 1"/>
+      <geom class="collision_015_peach" mesh="015_peach_coacd_part_004" rgba="0.832 0.21 0.18 1"/>
+      <geom class="collision_015_peach" mesh="015_peach_coacd_part_005" rgba="0.183 0.30 0.52 1"/>
+      <geom class="collision_015_peach" mesh="015_peach_coacd_part_006" rgba="0.432 0.29 0.61 1"/>
+      <geom class="collision_015_peach" mesh="015_peach_coacd_part_007" rgba="0.139 0.29 0.37 1"/>
+      <geom class="collision_015_peach" mesh="015_peach_coacd_part_008" rgba="0.456 0.79 0.20 1"/>
+      <geom class="collision_015_peach" mesh="015_peach_coacd_part_009" rgba="0.514 0.59 0.05 1"/>
+      <geom class="collision_015_peach" mesh="015_peach_coacd_part_010" rgba="0.608 0.17 0.07 1"/>
+      <geom class="collision_015_peach" mesh="015_peach_coacd_part_011" rgba="0.949 0.97 0.81 1"/>
+      <geom class="collision_015_peach" mesh="015_peach_coacd_part_012" rgba="0.305 0.10 0.68 1"/>
+      <geom class="collision_015_peach" mesh="015_peach_coacd_part_013" rgba="0.440 0.12 0.50 1"/>
+    </body>
+  </worldbody>
+</mujoco>

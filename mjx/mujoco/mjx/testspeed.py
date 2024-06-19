@@ -43,6 +43,7 @@ _LS_ITERATIONS = flags.DEFINE_integer(
 _OUTPUT = flags.DEFINE_enum(
     'output', 'text', ['text', 'tsv'], 'format to print results'
 )
+_KEYFRAME = flags.DEFINE_string('keyframe', None, 'the keyframe to load')
 
 
 def _main(argv: Sequence[str]):
@@ -61,6 +62,7 @@ def _main(argv: Sequence[str]):
       _SOLVER.value,
       _ITERATIONS.value,
       _LS_ITERATIONS.value,
+      _KEYFRAME.value,
   )
 
   name = argv[0]

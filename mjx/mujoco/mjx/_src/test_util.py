@@ -17,7 +17,7 @@
 import os
 import sys
 import time
-from typing import Dict, Optional, Tuple
+from typing import Dict, Optional, Tuple, Union
 from xml.etree import ElementTree as ET
 
 from etils import epath
@@ -56,6 +56,7 @@ def benchmark(
     solver: str = 'cg',
     iterations: int = 1,
     ls_iterations: int = 4,
+    keyframe: Union[str, None] = None,
 ) -> Tuple[float, float, int]:
   """Benchmark a model."""
 
@@ -80,6 +81,8 @@ def benchmark(
       d = io.make_data(m)
       qvel = 0.01 * jax.random.normal(key, shape=(m.nv,))
       d = d.replace(qvel=qvel)
+      if keyframe:
+        d = d.replace(qpos=m.keyframe(keyframe).qpos)
       return d
 
     return random_init(key)
