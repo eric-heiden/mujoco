@@ -279,6 +279,7 @@ def convex(m: Union[mujoco.MjModel, Model], data_id: int) -> ConvexMesh:
   face = np.vectorize(vertex_map.get)(face_globalid)
 
   tm_convex = trimesh.Trimesh(vertices=vert, faces=face)
+  tm_convex = tm_convex.simplify_quadratice_decimation(_MAX_HULL_FACES)
   vert = np.array(tm_convex.vertices)
   face = _merge_coplanar(m, tm_convex, data_id)
   face_normal = _get_face_norm(vert, face)
