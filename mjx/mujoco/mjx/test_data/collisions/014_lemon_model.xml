@@ -1,0 +1,32 @@
+<mujoco model="014_lemon">
+  <compiler assetdir="meshes" 014_lemon_texturedir="materials"/>
+
+  <asset>
+    <texture type="2d" name="texture" file="014_lemon_texture_map.png"/>
+    <material name="texture" texture="texture"/>
+
+    <mesh file="014_lemon_textured.obj"/>
+    <mesh file="014_lemon_coacd_part_000.obj"/>
+    <mesh file="014_lemon_coacd_part_001.obj"/>
+  </asset>
+
+  <default>
+    <default class="014_lemon">
+      <default class="visual_014_lemon">
+        <geom type="mesh" group="2" density="200" contype="0" conaffinity="0" material="texture"/>
+      </default>
+      <default class="collision_014_lemon">
+        <geom type="mesh" group="3" mass="0" density="0" solref=".004 1" friction="1.0 0.01 0.01" condim="6"/>
+      </default>
+    </default>
+  </default>
+
+  <worldbody>
+    <body childclass="014_lemon" pos="0 0 0.1">
+      <freejoint/>
+      <geom class="visual_014_lemon" mesh="014_lemon_textured"/>
+      <geom class="collision_014_lemon" mesh="014_lemon_coacd_part_000" rgba="0.375 0.95 0.73 1"/>
+      <geom class="collision_014_lemon" mesh="014_lemon_coacd_part_001" rgba="0.599 0.16 0.16 1"/>
+    </body>
+  </worldbody>
+</mujoco>

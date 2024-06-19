@@ -1,0 +1,44 @@
+<mujoco model="002_master_chef_can">
+  <compiler assetdir="meshes" 002_master_chef_can_texturedir="materials"/>
+
+  <asset>
+    <texture type="2d" name="texture" file="002_master_chef_can_texture_map.png"/>
+    <material name="texture" texture="texture"/>
+
+    <mesh file="002_master_chef_can_textured.obj"/>
+    <mesh file="002_master_chef_can_coacd_part_000.obj"/>
+    <mesh file="002_master_chef_can_coacd_part_001.obj"/>
+    <mesh file="002_master_chef_can_coacd_part_002.obj"/>
+    <mesh file="002_master_chef_can_coacd_part_003.obj"/>
+    <mesh file="002_master_chef_can_coacd_part_004.obj"/>
+    <mesh file="002_master_chef_can_coacd_part_005.obj"/>
+    <mesh file="002_master_chef_can_coacd_part_006.obj"/>
+    <mesh file="002_master_chef_can_coacd_part_007.obj"/>
+  </asset>
+
+  <default>
+    <default class="002_master_chef_can">
+      <default class="visual_002_master_chef_can">
+        <geom type="mesh" group="2" density="200" contype="0" conaffinity="0" material="texture"/>
+      </default>
+      <default class="collision_002_master_chef_can">
+        <geom type="mesh" group="3" mass="0" density="0" solref=".004 1" friction="1.0 0.01 0.01" condim="6"/>
+      </default>
+    </default>
+  </default>
+
+  <worldbody>
+    <body childclass="002_master_chef_can" pos="0 0 0.1">
+      <freejoint/>
+      <geom class="visual_002_master_chef_can" mesh="002_master_chef_can_textured"/>
+      <geom class="collision_002_master_chef_can" mesh="002_master_chef_can_coacd_part_000" rgba="0.375 0.95 0.73 1"/>
+      <geom class="collision_002_master_chef_can" mesh="002_master_chef_can_coacd_part_001" rgba="0.599 0.16 0.16 1"/>
+      <geom class="collision_002_master_chef_can" mesh="002_master_chef_can_coacd_part_002" rgba="0.058 0.87 0.60 1"/>
+      <geom class="collision_002_master_chef_can" mesh="002_master_chef_can_coacd_part_003" rgba="0.708 0.02 0.97 1"/>
+      <geom class="collision_002_master_chef_can" mesh="002_master_chef_can_coacd_part_004" rgba="0.832 0.21 0.18 1"/>
+      <geom class="collision_002_master_chef_can" mesh="002_master_chef_can_coacd_part_005" rgba="0.183 0.30 0.52 1"/>
+      <geom class="collision_002_master_chef_can" mesh="002_master_chef_can_coacd_part_006" rgba="0.432 0.29 0.61 1"/>
+      <geom class="collision_002_master_chef_can" mesh="002_master_chef_can_coacd_part_007" rgba="0.139 0.29 0.37 1"/>
+    </body>
+  </worldbody>
+</mujoco>
