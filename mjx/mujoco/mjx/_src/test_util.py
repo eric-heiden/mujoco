@@ -70,6 +70,7 @@ def benchmark(
   }[solver.lower()]
   m.opt.iterations = iterations
   m.opt.ls_iterations = ls_iterations
+  mj_model = m
   m = io.put_model(m)
 
   @jax.pmap
@@ -82,7 +83,7 @@ def benchmark(
       qvel = 0.01 * jax.random.normal(key, shape=(m.nv,))
       d = d.replace(qvel=qvel)
       if keyframe:
-        d = d.replace(qpos=m.keyframe(keyframe).qpos)
+        d = d.replace(qpos=mj_model.keyframe(keyframe).qpos)
       return d
 
     return random_init(key)

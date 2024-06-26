@@ -4,8 +4,8 @@
   </option>
 
   <custom>
-    <numeric data="200" name="max_contact_points"/>
-    <numeric data="200" name="max_geom_pairs"/>
+    <numeric data="400" name="max_contact_points"/>
+    <numeric data="400" name="max_geom_pairs"/>
   </custom>
 
   <asset>

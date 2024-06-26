@@ -1,7 +1,7 @@
 <mujoco model="ycb_scene">
   <include file="ycb_6.xml"/>
 
-  <option iterations="8" ls_iterations="8">
+  <option iterations="8" ls_iterations="8" timestep="0.001">
     <flag eulerdamp="disable"/>
   </option>
 
