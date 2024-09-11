@@ -50,14 +50,14 @@ def _main(argv: Sequence[str]) -> None:
   print(f'Default backend: {jax.default_backend()}')
   print('JIT-compiling the model physics step...')
   start = time.time()
-#-----------------------------------------------------------------
-#  step_fn = jax.jit(mjx.step).lower(mx, dx).compile()
- step_fn2 = jax.jit(mjx.step_cuda2).lower(mx, dx).compile()
-#-----------------------------------------------------------------
-# run only step1 and step3 by jit 
+  #-----------------------------------------------------------------
+  #  step_fn = jax.jit(mjx.step).lower(mx, dx).compile()
+  step_fn2 = jax.jit(mjx.step_cuda2).lower(mx, dx).compile()
+  #-----------------------------------------------------------------
+  # run only step1 and step3 by jit 
   step_fn1 = jax.jit(mjx.step_cuda1).lower(mx, dx).compile()
   step_fn3 = jax.jit(mjx.step_cuda3).lower(mx, dx).compile()
-#-----------------------------------------------------------------
+  #-----------------------------------------------------------------
   elapsed = time.time() - start
   print(f'Compilation took {elapsed}s.')
 
