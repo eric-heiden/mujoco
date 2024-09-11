@@ -103,8 +103,15 @@ def gjk_epa(m: Model, d: Data,
                          convex_vertex_array, convex_vertex_offset,
                          _depthExtension, _gjkIterationCount, _epaIterationCount, _epaBestCount, _multiPolygonCount, _multiTiltAngle, _ncon, _compress_result, out) -> Data:
 
+  ncon_total = contact_pairs * ncon
   out_types = (
-     jax.ShapeDtypeStruct(out.shape, dtype=jp.uint32),  # col_pair
+    jax.ShapeDtypeStruct(ncon_total, dtype=jp.uint32),  # contact_counter
+    jax.ShapeDtypeStruct((ncon_total, 3), dtype=jp.float32),  # contact_pos
+    jax.ShapeDtypeStruct(ncon_total, dtype=jp.float32),  # contact_dist
+    jax.ShapeDtypeStruct((ncon_total, 3, 3), dtype=jp.float32),  # contact_frame
+    jax.ShapeDtypeStruct((ncon_total, 3), dtype=jp.float32),  # contact_normal
+    jax.ShapeDtypeStruct((ncon_total, 12), dtype=jp.float32),  # contact_simplex
+    jax.ShapeDtypeStruct(0, dtype=jp.uint32),  # contact_pairs
   )
 
   (
@@ -112,17 +119,10 @@ def gjk_epa(m: Model, d: Data,
   ) = ffi.ffi_call(
       "gjk_epa_cuda",
       out_types,
-      contact_counter, 
-      contact_pos, 
-      contact_dist, 
-      contact_frame, 
-      contact_normal, 
-      contact_simplex,
-      contact_pairs, 
-      candidate_pairs, 
-      d.geom_xpos, 
+      candidate_pairs,
+      d.geom_xpos,
       d.geom_xmat,
-      m.geom_size, 
+      m.geom_size,
       m.geom_dataid,
       convex_vertex_array,
       convex_vertex_offset,

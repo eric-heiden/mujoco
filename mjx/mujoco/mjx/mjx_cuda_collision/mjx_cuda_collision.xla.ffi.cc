@@ -65,13 +65,13 @@ namespace mujoco
 
         static const auto* kGJK_EPA = ffi::Ffi::Bind()
             .Ctx<ffi::PlatformStream<cudaStream_t> >()  // stream
-            .Arg<ffi::Buffer<ffi::DataType::U32> >() // d_contact_counter,
-            .Arg<ffi::Buffer<ffi::DataType::F32> >() // d_contact_pos,
-            .Arg<ffi::Buffer<ffi::DataType::F32> >() // d_contact_dist,
-            .Arg<ffi::Buffer<ffi::DataType::F32> >() // d_contact_frame,
-            .Arg<ffi::Buffer<ffi::DataType::F32> >() // d_contact_normal,
-            .Arg<ffi::Buffer<ffi::DataType::F32> >() // d_contact_simplex,
-            .Arg<ffi::Buffer<ffi::DataType::S32> >() // d_contact_pairs,
+            .Ret<ffi::Buffer<ffi::DataType::U32> >() // d_contact_counter,
+            .Ret<ffi::Buffer<ffi::DataType::F32> >() // d_contact_pos,
+            .Ret<ffi::Buffer<ffi::DataType::F32> >() // d_contact_dist,
+            .Ret<ffi::Buffer<ffi::DataType::F32> >() // d_contact_frame,
+            .Ret<ffi::Buffer<ffi::DataType::F32> >() // d_contact_normal,
+            .Ret<ffi::Buffer<ffi::DataType::F32> >() // d_contact_simplex,
+            .Ret<ffi::Buffer<ffi::DataType::S32> >() // d_contact_pairs,
             .Arg<ffi::Buffer<ffi::DataType::S32> >() // d_candidate_pairs,
             .Arg<ffi::Buffer<ffi::DataType::F32> >() // d_xpos,
             .Arg<ffi::Buffer<ffi::DataType::F32> >() // d_xmat,
