@@ -32,6 +32,7 @@ import time
 
 _MODEL_PATH = flags.DEFINE_string('mjcf', None, 'Path to a MuJoCo MJCF file.',
                                   required=True)
+_JIT = flags.DEFINE_bool('jit', False, 'JIT collision step.')
 
 
 def _main(argv: Sequence[str]) -> None:
@@ -52,7 +53,12 @@ def _main(argv: Sequence[str]) -> None:
   start = time.time()
   #-----------------------------------------------------------------
   #  step_fn = jax.jit(mjx.step).lower(mx, dx).compile()
-  step_fn2 = jax.jit(mjx.step_cuda2).lower(mx, dx).compile()
+  # step_fn2 = jax.jit(mjx.step_cuda2).lower(mx, dx).compile()
+  # step_fn2 = jax.jit(mjx.step_cuda2)
+  if _JIT.value:
+    step_fn2 = jax.jit(mjx.step_cuda2)
+  else:
+    step_fn2 = mjx.step_cuda2
   #-----------------------------------------------------------------
   # run only step1 and step3 by jit 
   step_fn1 = jax.jit(mjx.step_cuda1).lower(mx, dx).compile()

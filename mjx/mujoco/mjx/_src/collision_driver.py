@@ -66,6 +66,7 @@ from mujoco.mjx._src.collision_sdf import cylinder_cylinder
 from mujoco.mjx._src.collision_sdf import ellipsoid_cylinder
 from mujoco.mjx._src.collision_sdf import ellipsoid_ellipsoid
 from mujoco.mjx._src.collision_types import FunctionKey
+from mujoco.mjx._src import collision_driver_cuda
 from mujoco.mjx._src.types import Contact
 from mujoco.mjx._src.types import Data
 from mujoco.mjx._src.types import DisableBit
@@ -369,6 +370,9 @@ def make_condim(m: Union[Model, mujoco.MjModel]) -> np.ndarray:
 
 def collision(m: Model, d: Data) -> Data:
   """Collides geometries."""
+  if jax.devices('gpu'):
+    return collision_driver_cuda.collision(m, d)
+
   if d.ncon == 0:
     return d
 

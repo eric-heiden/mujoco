@@ -87,8 +87,8 @@ g_contact_init = True
 g_compilation_size : Dict[FunctionKey, int] = {}
 #-----------------------------------------------------------------
 # [Broad-phase]
-#g_broadphase_method = 0   # broadphase_off
-g_broadphase_method = 1   # NxN
+g_broadphase_method = 0   # broadphase_off
+#g_broadphase_method = 1   # NxN
 #g_broadphase_method = 2   # sort
 #-----------------------------------------------------------------
 # [GJK setup]
@@ -611,8 +611,10 @@ def collision(m: Model, d: Data) -> Data:
   #     g_compilation_size[key] = contact.geom.shape[0]
   #   g_contact_init = True
   # #-----------------------------------------------------------------
-
-
+  global g_compilation_size
+  for key, contact in groups.items():
+    g_compilation_size[key] = contact.geom.shape[0]
+  
   # run collision functions on groups
   for key, contact in groups.items():
     # determine which contacts we'll use for collision testing by running a
@@ -633,8 +635,6 @@ def collision(m: Model, d: Data) -> Data:
     global g_compress_result, g_contact_counter, g_contact_dist, g_contact_pos, g_contact_frame, g_contact_normal, g_contact_simplex, g_contact_pairs, g_out
     candidate_pair_count_max = g_compilation_size[key] # contact.geom.shape[0]
     candidate_pair_count = contact.geom.shape[0]
-
-    
 
     func = _COLLISION_FUNC[key.types]
     ncon = func.ncon  # pytype: disable=attribute-error
@@ -662,7 +662,10 @@ def collision(m: Model, d: Data) -> Data:
                                 candidate_pair_count_max, candidate_pair_count, contact.geom, key.types[0], key.types[1], 
                                 m.g_convex_vertex_array, m.g_convex_vertex_offset, 
                                 1000000000.0, 12, 12, 12, 8, 1.0, ncon, g_compress_result, g_out);
-
+      # jax.debug.print("n_con={x}, n_geom={y}", x=(g_contact_dist < 0).sum(), y=candidate_pair_count_max)
+      # jax.debug.print("g_contact_counter={x}", x=g_contact_counter)
+      # jax.debug.print("g_contact_dist={x}", x=g_contact_dist)
+      # import IPython; IPython.embed(user_ns=dict(globals(), **locals()))
    
     #-----------------------------------------------------------------
     if(candidate_pair_count < candidate_pair_count_max) : 
