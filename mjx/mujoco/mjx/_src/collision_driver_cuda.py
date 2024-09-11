@@ -657,8 +657,15 @@ def collision(m: Model, d: Data) -> Data:
       else : g_contact_pairs = jp.zeros(0, dtype=jp.int32)
       g_out = jp.zeros(1, dtype=jp.uint32)
 
-      mjx_cuda_collision.gjk_epa(m, d, g_contact_counter, 
-                                g_contact_pos, g_contact_dist, g_contact_frame, g_contact_normal, g_contact_simplex, g_contact_pairs,
+      (
+          g_contact_counter,
+          g_contact_pos,
+          g_contact_dist,
+          g_contact_frame,
+          g_contact_normal,
+          g_contact_simplex,
+          g_contact_pairs,
+      ) = mjx_cuda_collision.gjk_epa(m, d,
                                 candidate_pair_count_max, candidate_pair_count, contact.geom, key.types[0], key.types[1], 
                                 m.g_convex_vertex_array, m.g_convex_vertex_offset, 
                                 1000000000.0, 12, 12, 12, 8, 1.0, ncon, g_compress_result, g_out);

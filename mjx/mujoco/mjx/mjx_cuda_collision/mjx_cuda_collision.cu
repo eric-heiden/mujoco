@@ -607,13 +607,13 @@ namespace mujoco
 
             xla::ffi::Error LaunchKernel_GJK_EPA(
                 cudaStream_t stream,
-                xla::ffi::Buffer<xla::ffi::DataType::U32> d_contact_counter,
-                xla::ffi::Buffer<xla::ffi::DataType::F32> d_contact_pos,
-                xla::ffi::Buffer<xla::ffi::DataType::F32> d_contact_dist,
-                xla::ffi::Buffer<xla::ffi::DataType::F32> d_contact_frame,
-                xla::ffi::Buffer<xla::ffi::DataType::F32> d_contact_normal,
-                xla::ffi::Buffer<xla::ffi::DataType::F32> d_contact_simplex,
-                xla::ffi::Buffer<xla::ffi::DataType::S32> d_contact_pairs,
+                xla::ffi::Result<xla::ffi::Buffer<xla::ffi::DataType::U32>> d_contact_counter,
+                xla::ffi::Result<xla::ffi::Buffer<xla::ffi::DataType::F32>> d_contact_pos,
+                xla::ffi::Result<xla::ffi::Buffer<xla::ffi::DataType::F32>> d_contact_dist,
+                xla::ffi::Result<xla::ffi::Buffer<xla::ffi::DataType::F32>> d_contact_frame,
+                xla::ffi::Result<xla::ffi::Buffer<xla::ffi::DataType::F32>> d_contact_normal,
+                xla::ffi::Result<xla::ffi::Buffer<xla::ffi::DataType::F32>> d_contact_simplex,
+                xla::ffi::Result<xla::ffi::Buffer<xla::ffi::DataType::S32>> d_contact_pairs,
                 xla::ffi::Buffer<xla::ffi::DataType::S32> d_candidate_pairs,
 
                 xla::ffi::Buffer<xla::ffi::DataType::F32> d_geom_xpos,
@@ -637,14 +637,14 @@ namespace mujoco
                 const unsigned int compress_result,
                 xla::ffi::Result<xla::ffi::Buffer<xla::ffi::DataType::U32>> out)
             {
-                jax_array _d_contact_counter(jax_array_type_uint, d_contact_counter.typed_data(), d_contact_counter.size_bytes(), "");
-                jax_array _d_contact_pos(jax_array_type_float, d_contact_pos.typed_data(), d_contact_pos.size_bytes(), "");
-                jax_array _d_contact_dist(jax_array_type_float, d_contact_dist.typed_data(), d_contact_dist.size_bytes(), "");
-                jax_array _d_contact_frame(jax_array_type_float, d_contact_frame.typed_data(), d_contact_frame.size_bytes(), "");
+                jax_array _d_contact_counter(jax_array_type_uint, d_contact_counter->typed_data(), d_contact_counter->size_bytes(), "");
+                jax_array _d_contact_pos(jax_array_type_float, d_contact_pos->typed_data(), d_contact_pos->size_bytes(), "");
+                jax_array _d_contact_dist(jax_array_type_float, d_contact_dist->typed_data(), d_contact_dist->size_bytes(), "");
+                jax_array _d_contact_frame(jax_array_type_float, d_contact_frame->typed_data(), d_contact_frame->size_bytes(), "");
 
-                jax_array _d_contact_normal(jax_array_type_float, d_contact_normal.typed_data(), d_contact_normal.size_bytes(), "");
-                jax_array _d_contact_simplex(jax_array_type_float, d_contact_simplex.typed_data(), d_contact_simplex.size_bytes(), "");
-                jax_array _d_contact_pairs(jax_array_type_int, d_contact_pairs.typed_data(), d_contact_pairs.size_bytes(), "");
+                jax_array _d_contact_normal(jax_array_type_float, d_contact_normal->typed_data(), d_contact_normal->size_bytes(), "");
+                jax_array _d_contact_simplex(jax_array_type_float, d_contact_simplex->typed_data(), d_contact_simplex->size_bytes(), "");
+                jax_array _d_contact_pairs(jax_array_type_int, d_contact_pairs->typed_data(), d_contact_pairs->size_bytes(), "");
 
                 jax_array _d_geom_xpos(jax_array_type_float, d_geom_xpos.typed_data(), d_geom_xpos.size_bytes(), "");
                 jax_array _d_geom_xmat(jax_array_type_float, d_geom_xmat.typed_data(), d_geom_xmat.size_bytes(), "");

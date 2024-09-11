@@ -96,26 +96,32 @@ def broad_phase_sort(m: Model, d: Data, d_bvh_aabb_dyn, col_counter, col_pair, _
   return True 
 
 def gjk_epa(m: Model, d: Data, 
-                         contact_counter,
-                         contact_pos, contact_dist, contact_frame, contact_normal, contact_simplex, contact_pairs, 
                          _candidate_pair_count_max, _candidate_pair_count, candidate_pairs, 
                          _key_types0, _key_types1,
                          convex_vertex_array, convex_vertex_offset,
                          _depthExtension, _gjkIterationCount, _epaIterationCount, _epaBestCount, _multiPolygonCount, _multiTiltAngle, _ncon, _compress_result, out) -> Data:
 
-  ncon_total = contact_pairs * ncon
+  ncon_total = _candidate_pair_count * _ncon
   out_types = (
-    jax.ShapeDtypeStruct(ncon_total, dtype=jp.uint32),  # contact_counter
+    jax.ShapeDtypeStruct((ncon_total,), dtype=jp.uint32),  # contact_counter
     jax.ShapeDtypeStruct((ncon_total, 3), dtype=jp.float32),  # contact_pos
-    jax.ShapeDtypeStruct(ncon_total, dtype=jp.float32),  # contact_dist
+    jax.ShapeDtypeStruct((ncon_total,), dtype=jp.float32),  # contact_dist
     jax.ShapeDtypeStruct((ncon_total, 3, 3), dtype=jp.float32),  # contact_frame
     jax.ShapeDtypeStruct((ncon_total, 3), dtype=jp.float32),  # contact_normal
     jax.ShapeDtypeStruct((ncon_total, 12), dtype=jp.float32),  # contact_simplex
-    jax.ShapeDtypeStruct(0, dtype=jp.uint32),  # contact_pairs
+    jax.ShapeDtypeStruct((0,), dtype=jp.int32),  # contact_pairs
+    jax.ShapeDtypeStruct(out.shape, dtype=out.dtype),  # out
   )
 
   (
-    out,
+    d_contact_counter,
+    d_contact_pos,
+    d_contact_dist,
+    d_contact_frame,
+    d_contact_normal,
+    d_contact_simplex,
+    d_contact_pairs,
+    _
   ) = ffi.ffi_call(
       "gjk_epa_cuda",
       out_types,
@@ -142,4 +148,7 @@ def gjk_epa(m: Model, d: Data,
       vectorized=True,
   )
 
-  return True 
+  return (
+      d_contact_counter, d_contact_pos, d_contact_dist, d_contact_frame,
+      d_contact_normal, d_contact_simplex, d_contact_pairs
+  )
