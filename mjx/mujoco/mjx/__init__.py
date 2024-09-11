@@ -23,7 +23,6 @@ from mujoco.mjx._src.forward import fwd_acceleration
 from mujoco.mjx._src.forward import fwd_actuation
 from mujoco.mjx._src.forward import fwd_position
 from mujoco.mjx._src.forward import fwd_velocity
-from mujoco.mjx._src.forward import implicit
 from mujoco.mjx._src.forward import rungekutta4
 from mujoco.mjx._src.forward import step
 from mujoco.mjx._src.io import get_data
@@ -33,9 +32,6 @@ from mujoco.mjx._src.io import put_data
 from mujoco.mjx._src.io import put_model
 from mujoco.mjx._src.passive import passive
 from mujoco.mjx._src.ray import ray
-from mujoco.mjx._src.sensor import sensor_acc
-from mujoco.mjx._src.sensor import sensor_pos
-from mujoco.mjx._src.sensor import sensor_vel
 from mujoco.mjx._src.smooth import camlight
 from mujoco.mjx._src.smooth import com_pos
 from mujoco.mjx._src.smooth import com_vel
@@ -43,8 +39,6 @@ from mujoco.mjx._src.smooth import crb
 from mujoco.mjx._src.smooth import factor_m
 from mujoco.mjx._src.smooth import kinematics
 from mujoco.mjx._src.smooth import rne
-from mujoco.mjx._src.smooth import rne_postconstraint
-from mujoco.mjx._src.smooth import subtree_vel
 from mujoco.mjx._src.smooth import tendon
 from mujoco.mjx._src.smooth import transmission
 from mujoco.mjx._src.solver import solve
@@ -55,3 +49,12 @@ from mujoco.mjx._src.support import mul_m
 from mujoco.mjx._src.support import name2id
 from mujoco.mjx._src.test_util import benchmark
 from mujoco.mjx._src.types import *
+
+#-----------------------------------------------------------------
+from mujoco.mjx._src.forward_cuda import step_cuda1
+from mujoco.mjx._src.forward_cuda import step_cuda2
+from mujoco.mjx._src.forward_cuda import step_cuda3
+from mujoco.mjx._src.collision_driver_cuda import collision
+from mujoco.mjx._src import mjx_cuda_collision
+#-----------------------------------------------------------------
+from . import _mjx_cuda_collision
