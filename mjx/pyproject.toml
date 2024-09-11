@@ -34,7 +34,6 @@ dependencies = [
     "mujoco>=3.2.3.dev0",
     "scipy",
     "trimesh",
-    "open3d",
 ]
 
 [project.scripts]
