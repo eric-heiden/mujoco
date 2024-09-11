@@ -82,7 +82,7 @@ import jax.lax as lax
 import time
 #-----------------------------------------------------------------
 g_print_time = False
-g_contact_init = False
+g_contact_init = True
 # fixed-size 
 g_compilation_size : Dict[FunctionKey, int] = {}
 #-----------------------------------------------------------------
@@ -113,42 +113,42 @@ g_convex_initialized = False
 g_convex_vertex_array : jax.Array
 g_convex_vertex_offset : jax.Array
 #-----------------------------------------------------------------
-def merge_convex_vert(m: Union[Model, mujoco.MjModel], ) -> bool :
+# def merge_convex_vert(m: Union[Model, mujoco.MjModel], ) -> bool :
 
-  global g_convex_initialized
+#   global g_convex_initialized
   
-  if(g_convex_initialized) : 
-    return False
+#   if(g_convex_initialized) : 
+#     return False
 
-  global g_convex_vertex_array
-  global g_convex_vertex_offset
+#   global g_convex_vertex_array
+#   global g_convex_vertex_offset
 
-  mesh_convex_size = len(m.mesh_convex)
+#   mesh_convex_size = len(m.mesh_convex)
 
-  total_convex_vertex_size = 0
-  for cm in m.mesh_convex : 
-    if cm is not None: total_convex_vertex_size += cm.vert.shape[0]
+#   total_convex_vertex_size = 0
+#   for cm in m.mesh_convex : 
+#     if cm is not None: total_convex_vertex_size += cm.vert.shape[0]
   
-  g_convex_vertex_array = jp.zeros((total_convex_vertex_size, 3), jp.float32)
-  convex_vertex_offset_np = np.zeros(mesh_convex_size + 1, np.int32)
-  convex_vertex_offset_np[0] = 0
+#   g_convex_vertex_array = jp.zeros((total_convex_vertex_size, 3), jp.float32)
+#   convex_vertex_offset_np = np.zeros(mesh_convex_size + 1, np.int32)
+#   convex_vertex_offset_np[0] = 0
 
-  # copy convex_vertex_data to jax with offset 
-  vertex_offset = 0
-  for cmi in range(mesh_convex_size) :
-    vertex_count = 0
-    if m.mesh_convex[cmi] is not None: 
-      vertex_count = m.mesh_convex[cmi].vert.shape[0]
-      g_convex_vertex_array = lax.dynamic_update_slice(g_convex_vertex_array, m.mesh_convex[cmi].vert, (vertex_offset, 0))
-    vertex_offset += vertex_count
-    convex_vertex_offset_np[cmi + 1] = vertex_offset
+#   # copy convex_vertex_data to jax with offset 
+#   vertex_offset = 0
+#   for cmi in range(mesh_convex_size) :
+#     vertex_count = 0
+#     if m.mesh_convex[cmi] is not None: 
+#       vertex_count = m.mesh_convex[cmi].vert.shape[0]
+#       g_convex_vertex_array = lax.dynamic_update_slice(g_convex_vertex_array, m.mesh_convex[cmi].vert, (vertex_offset, 0))
+#     vertex_offset += vertex_count
+#     convex_vertex_offset_np[cmi + 1] = vertex_offset
   
-  # copy vertex_offset data to jax
-  g_convex_vertex_offset = jp.array(convex_vertex_offset_np)
+#   # copy vertex_offset data to jax
+#   g_convex_vertex_offset = jp.array(convex_vertex_offset_np)
 
-  g_convex_initialized = 1
+#   g_convex_initialized = 1
 
-  return True
+#   return True
 #-----------------------------------------------------------------
 #=================================================================
 
@@ -258,10 +258,10 @@ def geom_pairs(
 
     # if the result is full NxN -> no reason to use 
     if(use_pool) : 
-      if(pool_size == int(m.ngeom * (m.ngeom-1) / 2)) : use_pool = False
-      else : 
-        for i  in range (pool_size) :
-          pool_set.add((pool[i*2], pool[i*2+1]))
+      # if(pool_size == int(m.ngeom * (m.ngeom-1) / 2)) : use_pool = False
+      # else : 
+      for i  in range (pool_size) :
+        pool_set.add((pool[i*2], pool[i*2+1]))
     
   # -----------------------------------------------------------------
 
@@ -601,16 +601,16 @@ def collision(m: Model, d: Data) -> Data:
   max_geom_pairs = _numeric(m, 'max_geom_pairs')
   max_contact_points = _numeric(m, 'max_contact_points')
 
-  #-----------------------------------------------------------------
-  global g_contact_init
-  if(g_contact_init == False) : 
-    # build a merged convex mesh 
-    merge_convex_vert(m)
-    # initial key 
-    for key, contact in groups.items():
-      g_compilation_size[key] = contact.geom.shape[0]
-    g_contact_init = True
-  #-----------------------------------------------------------------
+  # #-----------------------------------------------------------------
+  # global g_contact_init
+  # if(g_contact_init == False) : 
+  #   # build a merged convex mesh 
+  #   merge_convex_vert(m)
+  #   # initial key 
+  #   for key, contact in groups.items():
+  #     g_compilation_size[key] = contact.geom.shape[0]
+  #   g_contact_init = True
+  # #-----------------------------------------------------------------
 
 
   # run collision functions on groups
@@ -657,13 +657,10 @@ def collision(m: Model, d: Data) -> Data:
       else : g_contact_pairs = jp.zeros(0, dtype=jp.int32)
       g_out = jp.zeros(1, dtype=jp.uint32)
 
-      global g_convex_vertex_array
-      global g_convex_vertex_offset
-
       mjx_cuda_collision.gjk_epa(m, d, g_contact_counter, 
                                 g_contact_pos, g_contact_dist, g_contact_frame, g_contact_normal, g_contact_simplex, g_contact_pairs,
                                 candidate_pair_count_max, candidate_pair_count, contact.geom, key.types[0], key.types[1], 
-                                g_convex_vertex_array, g_convex_vertex_offset, 
+                                m.g_convex_vertex_array, m.g_convex_vertex_offset, 
                                 1000000000.0, 12, 12, 12, 8, 1.0, ncon, g_compress_result, g_out);
 
    

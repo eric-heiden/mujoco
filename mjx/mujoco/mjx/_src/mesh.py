@@ -375,3 +375,30 @@ def hfield(m: Union[mujoco.MjModel, Model], data_id: int) -> HFieldInfo:
       m.hfield_data[adr : adr + nrow * ncol].reshape((ncol, nrow), order='F'),
   )
   return h
+
+
+def merge_convex_vert(mesh_convex: Tuple[ConvexMesh, ...]) -> Tuple[jax.Array, jax.Array]:t
+  mesh_convex_size = len(mesh_convex)
+
+  total_convex_vertex_size = 0
+  for cm in m.mesh_convex : 
+    if cm is not None: total_convex_vertex_size += cm.vert.shape[0]
+  
+  g_convex_vertex_array = jp.zeros((total_convex_vertex_size, 3), jp.float32)
+  convex_vertex_offset_np = np.zeros(mesh_convex_size + 1, np.int32)
+  convex_vertex_offset_np[0] = 0
+
+  # copy convex_vertex_data to jax with offset 
+  vertex_offset = 0
+  for cmi in range(mesh_convex_size) :
+    vertex_count = 0
+    if m.mesh_convex[cmi] is not None: 
+      vertex_count = m.mesh_convex[cmi].vert.shape[0]
+      g_convex_vertex_array = lax.dynamic_update_slice(g_convex_vertex_array, m.mesh_convex[cmi].vert, (vertex_offset, 0))
+    vertex_offset += vertex_count
+    convex_vertex_offset_np[cmi + 1] = vertex_offset
+  
+  # copy vertex_offset data to jax
+  g_convex_vertex_offset = jp.array(convex_vertex_offset_np)
+
+  return g_convex_vertex_array, g_convex_vertex_offset

@@ -52,7 +52,7 @@ def _main(argv: Sequence[str]) -> None:
   start = time.time()
 #-----------------------------------------------------------------
 #  step_fn = jax.jit(mjx.step).lower(mx, dx).compile()
-#  step_fn2 = jax.jit(mjx.step_cuda2).lower(mx, dx).compile()
+ step_fn2 = jax.jit(mjx.step_cuda2).lower(mx, dx).compile()
 #-----------------------------------------------------------------
 # run only step1 and step3 by jit 
   step_fn1 = jax.jit(mjx.step_cuda1).lower(mx, dx).compile()
@@ -81,8 +81,8 @@ def _main(argv: Sequence[str]) -> None:
       start_time = time.perf_counter()
 
       dx = step_fn1(mx, dx)
-      #dx = step_fn2(mx, dx)
-      dx = mjx.step_cuda2(mx, dx) # disable git 
+      dx = step_fn2(mx, dx)
+      # dx = mjx.step_cuda2(mx, dx) # disable jit 
       dx = step_fn3(mx, dx)
       end_time = time.perf_counter()
 

@@ -978,6 +978,8 @@ class Model(PyTreeNode):
   mesh_pos: np.ndarray
   mesh_quat: np.ndarray
   mesh_convex: Tuple[ConvexMesh, ...] = _restricted_to('mjx')
+  g_convex_vertex_array: jax.Array = _restricted_to('mjx')
+  g_convex_vertex_offset: jax.Array = _restricted_to('mjx')
   hfield_size: np.ndarray
   hfield_nrow: np.ndarray
   hfield_ncol: np.ndarray

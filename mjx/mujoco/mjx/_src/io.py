@@ -146,6 +146,11 @@ def put_model(
     if fields['mesh_convex'][dataid] is None:
       fields['mesh_convex'][dataid] = mesh.convex(m, dataid)  # pytype: disable=unsupported-operands
   fields['mesh_convex'] = tuple(fields['mesh_convex'])
+  g_convex_vertex_array, g_convex_vertex_offset = mesh.merge_convex_vert(
+    fields['mesh_convex']
+  )
+  fields['g_convex_vertex_array'] = g_convex_vertex_array
+  fields['g_convex_vertex_offset'] = g_convex_vertex_offset
 
   model = types.Model(**{k: copy.copy(v) for k, v in fields.items()})
 
