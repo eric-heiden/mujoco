@@ -162,7 +162,8 @@ namespace mujoco
 			template <> __host__  __device__ __forceinline__ float GJK_SupportPoint<GeomType_ELLIPSOID>(const GeomType_ELLIPSOID& prim, const float4* matrix, const float3& n, float3& out, const float * __restrict d_convex_vertex)
 			{
 				float3 n0 = { matrix[0].x * n.x + matrix[1].x * n.y + matrix[2].x * n.z, matrix[0].y * n.x + matrix[1].y * n.y + matrix[2].y * n.z, matrix[0].z * n.x + matrix[1].z * n.y + matrix[2].z * n.z };
-				float3 loc = { prim.radiusx * n0.x, prim.radiusy * n0.y, prim.radiusz * n0.z };
+				float3 r0 = { prim.radiusx * prim.radiusx * n0.x, prim.radiusy * prim.radiusy * n0.y, prim.radiusz * prim.radiusz * n0.z };
+				float3 loc = r0 / sqrtf(dot(r0, n0));
 				out.x = matrix[0].x * loc.x + matrix[0].y * loc.y + matrix[0].z * loc.z + matrix[0].w;
 				out.y = matrix[1].x * loc.x + matrix[1].y * loc.y + matrix[1].z * loc.z + matrix[1].w;
 				out.z = matrix[2].x * loc.x + matrix[2].y * loc.y + matrix[2].z * loc.z + matrix[2].w;
