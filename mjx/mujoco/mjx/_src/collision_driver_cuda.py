@@ -657,6 +657,13 @@ def collision(m: Model, d: Data) -> Data:
       else : g_contact_pairs = jp.zeros(0, dtype=jp.int32)
       g_out = jp.zeros(1, dtype=jp.uint32)
 
+      depthExtension = 1000000000.0
+      gjkIterationCount = 10
+      epaIterationCount = 8
+      epaBestCount = 8
+      multiPolygonCount = 8
+      multiTiltAngle = 1.0
+
       (
           g_contact_counter,
           g_contact_pos,
@@ -668,7 +675,7 @@ def collision(m: Model, d: Data) -> Data:
       ) = mjx_cuda_collision.gjk_epa(m, d,
                                 candidate_pair_count_max, candidate_pair_count, contact.geom, key.types[0], key.types[1], 
                                 m.g_convex_vertex_array, m.g_convex_vertex_offset, 
-                                1000000000.0, 12, 12, 12, 8, 1.0, ncon, g_compress_result, g_out);
+                                depthExtension,  gjkIterationCount, epaIterationCount, epaBestCount, multiPolygonCount, multiTiltAngle, ncon, g_compress_result, g_out);
       # jax.debug.print("n_con={x}, n_geom={y}", x=(g_contact_dist < 0).sum(), y=candidate_pair_count_max)
       # jax.debug.print("g_contact_counter={x}", x=g_contact_counter)
       # jax.debug.print("g_contact_dist={x}", x=g_contact_dist)
