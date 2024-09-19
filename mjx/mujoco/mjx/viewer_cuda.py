@@ -23,7 +23,7 @@ import jax
 import mujoco
 from mujoco import mjx
 import mujoco.viewer
-
+import logging
 
 #-----------------------------------------------------------------
 import time 
@@ -33,6 +33,25 @@ import time
 _MODEL_PATH = flags.DEFINE_string('mjcf', None, 'Path to a MuJoCo MJCF file.',
                                   required=True)
 _JIT = flags.DEFINE_bool('jit', False, 'JIT collision step.')
+
+
+_GLOBAL_STATE = {
+    'running': True,
+    'pdb': False,
+    'reset': False,
+}
+
+
+def key_callback(key: int) -> None:
+  if key == 32:  # Space bar
+    _GLOBAL_STATE['running'] = not _GLOBAL_STATE['running']
+    logging.info('RUNNING = %s', _GLOBAL_STATE['running'])
+  elif key == 82:  # R
+    _GLOBAL_STATE['reset'] = True
+    logging.info('RESET = %s', _GLOBAL_STATE['reset'])
+  elif key == 80:  # P
+    _GLOBAL_STATE['pdb'] = True
+    logging.info('Requested PDB = %s', _GLOBAL_STATE['pdb'])
 
 
 def _main(argv: Sequence[str]) -> None:
@@ -67,7 +86,7 @@ def _main(argv: Sequence[str]) -> None:
   elapsed = time.time() - start
   print(f'Compilation took {elapsed}s.')
 
-  with mujoco.viewer.launch_passive(m, d) as v:
+  with mujoco.viewer.launch_passive(m, d, key_callback=key_callback) as v:
     while True:
       start = time.time()
 
@@ -85,11 +104,11 @@ def _main(argv: Sequence[str]) -> None:
       # dx = step(mx, dx)
       #-----------------------------------------------------------------
       start_time = time.perf_counter()
-
-      dx = step_fn1(mx, dx)
-      dx = step_fn2(mx, dx)
-      # dx = mjx.step_cuda2(mx, dx) # disable jit 
-      dx = step_fn3(mx, dx)
+      if _GLOBAL_STATE['running']:
+        dx = step_fn1(mx, dx)
+        dx = step_fn2(mx, dx)
+        # dx = mjx.step_cuda2(mx, dx) # disable jit 
+        dx = step_fn3(mx, dx)
       end_time = time.perf_counter()
 
       elapsed_time = (end_time - start_time) * 1e4 # milli
