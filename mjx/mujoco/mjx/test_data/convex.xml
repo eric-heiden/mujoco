@@ -38,14 +38,5 @@
       <geom name="pyramid" pos="0 0 0" type="mesh" mesh="pyramid" rgba="1 0 1 1"/>
     </body>
     
-    <body pos="0.0 0.0 0.5">
-      <freejoint/>
-      <geom type="box" size="0.25 0.25 0.25"/>
-    </body>
-
-   <body pos="0.0 0.0 0.8">
-     <freejoint/>
-     <geom type="box" size="0.15 0.15 0.15"/>
-   </body> 
-  </worldbody>
+      </worldbody>
 </mujoco>

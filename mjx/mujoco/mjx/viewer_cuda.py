@@ -93,7 +93,7 @@ def _main(argv: Sequence[str]) -> None:
       end_time = time.perf_counter()
 
       elapsed_time = (end_time - start_time) * 1e4 # milli
-      print(f"Elapsed time in ms: {elapsed_time:.2f} ms")
+      #print(f"Elapsed time in ms: {elapsed_time:.2f} ms")
       #-----------------------------------------------------------------
 
       mjx.get_data_into(d, m, dx)
