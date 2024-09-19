@@ -231,11 +231,10 @@ namespace mujoco
 			// ------------------------------------------------------------------------------------------------
 			__host__ __device__ __forceinline__ bool GJK_Normalize(float3& a)
 			{
-				float norm = (float) sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
-				//	if (norm == 0.0f) norm = a.y = 1e-16f;
-				if (norm > 0)
+				float norm = sqrtf(a.x * a.x + a.y * a.y + a.z * a.z);
+				if ((norm > 1e-8f) && (norm < 1e12f))
 				{
-					a.x /= norm, a.y /= norm, a.z /= norm;
+					a /= norm;
 					return(true);
 				}
 				else return(false);
