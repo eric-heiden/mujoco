@@ -30,3 +30,4 @@ Info.framework.plist
 __pycache__/
 *.py[cod]
 *$py.class
+mjx/mujoco/mjx/mjx_cuda_collision/tasks_local.sh

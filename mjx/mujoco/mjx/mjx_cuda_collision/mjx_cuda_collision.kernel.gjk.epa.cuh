@@ -162,7 +162,8 @@ namespace mujoco
 			template <> __host__  __device__ __forceinline__ float GJK_SupportPoint<GeomType_ELLIPSOID>(const GeomType_ELLIPSOID& prim, const float4* matrix, const float3& n, float3& out, const float * __restrict d_convex_vertex)
 			{
 				float3 n0 = { matrix[0].x * n.x + matrix[1].x * n.y + matrix[2].x * n.z, matrix[0].y * n.x + matrix[1].y * n.y + matrix[2].y * n.z, matrix[0].z * n.x + matrix[1].z * n.y + matrix[2].z * n.z };
-				float3 loc = { prim.radiusx * n0.x, prim.radiusy * n0.y, prim.radiusz * n0.z };
+				float3 r0 = { prim.radiusx * prim.radiusx * n0.x, prim.radiusy * prim.radiusy * n0.y, prim.radiusz * prim.radiusz * n0.z };
+				float3 loc = r0 / sqrtf(dot(r0, n0));
 				out.x = matrix[0].x * loc.x + matrix[0].y * loc.y + matrix[0].z * loc.z + matrix[0].w;
 				out.y = matrix[1].x * loc.x + matrix[1].y * loc.y + matrix[1].z * loc.z + matrix[1].w;
 				out.z = matrix[2].x * loc.x + matrix[2].y * loc.y + matrix[2].z * loc.z + matrix[2].w;
@@ -230,11 +231,10 @@ namespace mujoco
 			// ------------------------------------------------------------------------------------------------
 			__host__ __device__ __forceinline__ bool GJK_Normalize(float3& a)
 			{
-				float norm = (float) sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
-				//	if (norm == 0.0f) norm = a.y = 1e-16f;
-				if (norm > 0)
+				float norm = sqrtf(a.x * a.x + a.y * a.y + a.z * a.z);
+				if ((norm > 1e-8f) && (norm < 1e12f))
 				{
-					a.x /= norm, a.y /= norm, a.z /= norm;
+					a /= norm;
 					return(true);
 				}
 				else return(false);
@@ -267,6 +267,8 @@ namespace mujoco
 			// GJK_EPA_InitContact
 			// ------------------------------------------------------------------------------------------------
 			// init up to candidate_pair_count_max 
+			// initializes the distance of each contact to infinite
+
 			__global__ void GJK_EPA_InitContact(const unsigned int candidate_pair_count_max, const int ncon, float* __restrict d_contact_dist)
 			{
 				unsigned int m = blockIdx.x * blockDim.x + threadIdx.x;
@@ -282,6 +284,10 @@ namespace mujoco
 			// ------------------------------------------------------------------------------------------------
 			// GJK
 			// ------------------------------------------------------------------------------------------------
+			// calculates whether two object intersects (if depth > 0)
+			// it can be modified to return only the subset which intersects using atomic operations as in EPA (this would work correctly only with no depth extension)
+			// gjkIterationCount - the number of iterations (default 10) - increase if it does not converge in default number of steps
+
 			template <class GeomType1, class GeomType2>
 			__global__ void GJK(
 				const unsigned int candidate_pair_count,
@@ -375,6 +381,17 @@ namespace mujoco
 			// ------------------------------------------------------------------------------------------------
 			// EPA
 			// ------------------------------------------------------------------------------------------------
+			// returns the normal and distance (-depth) for each pair - the smallest depth if they intersect, the closest points if objects don't
+			// the method returns only the subset of points with (depth > -depthExtension), currently depthExtension is set to inf
+			// epaIterationCount - the number of iterations (increase to get a more precise result)
+			// epaBestCount - the number of best candidates in each iteration (increase to get a more precise result)
+			//				- epaBestCount must be less or equal to const int maxEpaBestCount (which should be as small as possible to minimize the number of required registers)
+			//              - if you need a large possible range, compile multiple versions with additional template parameter for maxEpaBestCount
+			// compress_result - returns only candidates with (depth > -depthExtension), otherwise it sets the flags activeContacts 0/1
+			// exactNegDistance - if flag is on, the algorithm calculates the distance of non-intersecting objects exactly
+			//                    for intersecting, the closest point on the Minkowski maniforld to the	origin is always on the face
+			//                    for non-intersecting, the closes point can be on the edge or in the corner and in that case additional tests have to be done							
+
 			template <class GeomType1, class GeomType2>
 			__global__ void EPA(
 				const unsigned int candidate_pair_count,
@@ -389,7 +406,7 @@ namespace mujoco
 				const float depthExtension, const int epaIterationCount, const int epaBestCount,
 				const bool compress_result)
 			{
-				const int maxEpaBestCount = 12;
+				const int maxEpaBestCount = 8;
 				bool exactNegDistance = true;
 
 				unsigned int m = blockIdx.x * blockDim.x + threadIdx.x;
@@ -536,6 +553,16 @@ namespace mujoco
 			// ------------------------------------------------------------------------------------------------
 			// GetMultipleContacts
 			// ------------------------------------------------------------------------------------------------
+			// calculates multiple contact points given the normal from EPA
+			//		1. calculates the polygon on each shape by tilting the normal "multiTiltAngle" degrees in the orthogonal complement of the normal
+			//			- the multiTiltAngle can be changed to depend on the depth of the contact (for example linear dependence)
+			//		2. the normal is tilted "multiPolygonCount" in the directions around (works well for >= 6, default is 8)
+			//			- multiPolygonCount must be less of equal maxMultiPolygonCount (which should be as small as possible to minimize the number of required registers)
+			//		3. the intersection between these two polygons in calculated in the 2D space (complement to the normal)
+			//			- if they intersect (they should always if there are no numerical issues) - extreme points in both directions are found 
+			//				- this can be modified to the extremes in the direction of eigenvectors of the variance of points of each polygon
+			//			- if they don't intersect, the closes points of both polygons are found
+
 			template <class GeomType1, class GeomType2>
 			__global__ void GetMultipleContacts(
 				const unsigned int contact_pair_count,
