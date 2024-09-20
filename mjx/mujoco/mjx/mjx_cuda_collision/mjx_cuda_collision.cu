@@ -434,7 +434,7 @@ namespace mujoco
                     GetMultipleContacts<GeomType1, GeomType2> << <gridSize, blockSize, 0, stream >> > (
                         contact_pair_count,
                         output.d_contact_pos->dev.f,
-                        output.d_contact_dist->dev.f, output.d_contact_normal->dev.f,
+                        output.d_contact_dist->dev.f,output.d_contact_frame->dev.f,
                         compress_result ? output.d_contact_pairs->dev.i : input.d_candidate_pairs->dev.i,
                         input.ncon, input.m_ngeom, input.m_geom_size->dev.f, input.d_geom_xpos->dev.f, input.d_geom_xmat->dev.f,
                         input.m_geom_dataid->dev.i, input.m_mesh_convex_vert->dev.f, input.m_mesh_convex_vert_offset->dev.i,
