@@ -243,19 +243,15 @@ namespace mujoco
 			// ------------------------------------------------------------------------------------------------
 			// GJK_MakeFrame
 			// ------------------------------------------------------------------------------------------------
-			__host__ __device__ __forceinline__ void GJK_MakeFrame(float* frame, float3& _a)
+			__host__ __device__ __forceinline__ void GJK_MakeFrame(float* frame, float3& a)
 			{
-				float3 a = _a;
-
-				float mag_a = dot(a, a);
-				if(mag_a > 0.0f){ a /= sqrtf(mag_a);}
 				float3 y = make_float3(0.0f, 1.0f, 0.0f), z = make_float3(0.0f, 0.0f, 1.0f);
 				float3 b = ((-0.5f < a.y) && (a.y < 0.5f)) ? y : z;
 				b = b - a * dot(a, b);
 
 				float mag_b = dot(b, b);
 				if(mag_b > 0.0f){ b /= sqrtf(mag_b); }
-				if(!(a.x || a.y || a.z)) { b= make_float3(0.0f, 0.0f, 0.0f); }
+				if(!(a.x || a.y || a.z)) { b = make_float3(0.0f, 0.0f, 0.0f); }
 				float3 c = cross(a, b);
 
 				frame[0] = a.x; frame[3] = b.x; frame[6] = c.x;
@@ -397,7 +393,7 @@ namespace mujoco
 				const unsigned int candidate_pair_count,
 				// output 
 				unsigned int* __restrict activeContacts,
-				float* __restrict d_contact_dist, float* __restrict d_contact_frame, float* __restrict d_contact_normal, int* __restrict d_contact_pairs,
+				float* __restrict d_contact_dist, float* __restrict d_contact_frame, const float* __restrict d_contact_normal, int* __restrict d_contact_pairs,
 				const float4* __restrict d_simplex, 
 				// input 
 				const int* __restrict d_candidate_pairs,
@@ -569,7 +565,7 @@ namespace mujoco
 				// output 
 				float* __restrict d_contact_pos,
 				// input 
-				 const float* __restrict d_contact_dist, const float* __restrict d_contact_normal,
+				 const float* __restrict d_contact_dist, const float* __restrict d_contact_frame,
 				const int* __restrict contact_pair_list,
 				const unsigned int ncon, const unsigned int m_ngeom, const float* __restrict d_geom_size, const float* geom_xpos, const float* geom_xmat, // transformation 
 				const int * __restrict m_geom_dataid, const float * __restrict d_convex_vertex, const int * __restrict d_convex_offset,
@@ -583,7 +579,7 @@ namespace mujoco
 					float depth = -d_contact_dist[mIdx * ncon];
 					if(depth < -depthExtension) return;
 
-					float3 normal = make_float3(d_contact_normal[mIdx * 3], d_contact_normal[mIdx * 3 + 1], d_contact_normal[mIdx * 3 + 2]);
+					float3 normal = make_float3(d_contact_frame[mIdx * 9], d_contact_frame[mIdx * 9 + 1], d_contact_frame[mIdx * 9 + 2]);
 
 					int pi = contact_pair_list[mIdx * 2], pj = contact_pair_list[mIdx * 2 + 1];
 					if(pi < 0 || pj < 0) {return;}
