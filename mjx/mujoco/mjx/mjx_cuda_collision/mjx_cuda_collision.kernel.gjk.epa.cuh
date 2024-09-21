@@ -579,7 +579,7 @@ namespace mujoco
 					float depth = -d_contact_dist[mIdx * ncon];
 					if(depth < -depthExtension) return;
 
-					float3 normal = make_float3(d_contact_frame[mIdx * 9], d_contact_frame[mIdx * 9 + 1], d_contact_frame[mIdx * 9 + 2]);
+          float3 normal = make_float3(d_contact_frame[mIdx * ncon * 9], d_contact_frame[mIdx * ncon * 9 + 1], d_contact_frame[mIdx * ncon * 9 + 2]);
 
 					int pi = contact_pair_list[mIdx * 2], pj = contact_pair_list[mIdx * 2 + 1];
 					if(pi < 0 || pj < 0) {return;}
