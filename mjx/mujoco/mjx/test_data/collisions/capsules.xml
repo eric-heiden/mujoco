@@ -1,0 +1,434 @@
+<mujoco model="capsules">
+  <option iterations="10" ls_iterations="10" timestep="0.001">
+    <flag eulerdamp="disable"/>
+  </option>
+
+  <custom>
+    <numeric data="400" name="max_contact_points"/>
+    <numeric data="400" name="max_geom_pairs"/>
+  </custom>
+
+  <asset>
+    <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="3072"/>
+    <texture type="2d" name="groundplane" builtin="checker" mark="edge" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3"
+      markrgb="0.8 0.8 0.8" width="300" height="300"/>
+    <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.2"/>
+  </asset>
+
+  <statistic center="0 0 0.1" extent="0.4" meansize="0.02"/>
+
+  <visual>
+    <headlight diffuse="0.6 0.6 0.6" ambient="0.3 0.3 0.3" specular="0 0 0"/>
+    <rgba haze="0.15 0.25 0.35 1"/>
+    <global azimuth="120" elevation="-10"/>
+  </visual>
+
+  <worldbody>
+    <light pos="0 0 1.5" directional="true"/>
+    <geom name="floor" size="0 0 0.05" type="plane" material="groundplane"/>
+    <geom type="box" size="0.01 0.15 0.1" pos="0.15 0.0 0.0"/>
+    <geom type="box" size="0.01 0.15 0.1" pos="-0.15 0.0 0.0"/>
+    <geom type="box" size="0.15 0.01 0.1" pos="0.0 0.15 0.0"/>
+    <geom type="box" size="0.15 0.01 0.1" pos="0.0 -0.15 0.0"/>
+    <body pos="0.000 0.100 0.010">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.020 0.098 0.030">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.038 0.092 0.050">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.056 0.083 0.070">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.071 0.071 0.090">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.083 0.056 0.110">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.092 0.038 0.130">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.098 0.020 0.150">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.100 0.000 0.170">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.098 -0.020 0.190">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.092 -0.038 0.210">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.083 -0.056 0.230">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.071 -0.071 0.250">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.056 -0.083 0.270">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.038 -0.092 0.290">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.020 -0.098 0.310">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.000 -0.100 0.330">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.020 -0.098 0.350">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.038 -0.092 0.370">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.056 -0.083 0.390">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.071 -0.071 0.410">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.083 -0.056 0.430">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.092 -0.038 0.450">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.098 -0.020 0.470">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.100 -0.000 0.490">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.098 0.020 0.510">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.092 0.038 0.530">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.083 0.056 0.550">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.071 0.071 0.570">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.056 0.083 0.590">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.038 0.092 0.610">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.020 0.098 0.630">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.000 0.100 0.650">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.020 0.098 0.670">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.038 0.092 0.690">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.056 0.083 0.710">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.071 0.071 0.730">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.083 0.056 0.750">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.092 0.038 0.770">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.098 0.020 0.790">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.100 0.000 0.810">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.098 -0.020 0.830">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.092 -0.038 0.850">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.083 -0.056 0.870">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.071 -0.071 0.890">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.056 -0.083 0.910">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.038 -0.092 0.930">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.020 -0.098 0.950">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.000 -0.100 0.970">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.020 -0.098 0.990">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.038 -0.092 1.010">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.056 -0.083 1.030">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.071 -0.071 1.050">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.083 -0.056 1.070">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.092 -0.038 1.090">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.098 -0.020 1.110">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.100 -0.000 1.130">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.098 0.020 1.150">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.092 0.038 1.170">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.083 0.056 1.190">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.071 0.071 1.210">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.056 0.083 1.230">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.038 0.092 1.250">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.020 0.098 1.270">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.000 0.100 1.290">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.020 0.098 1.310">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.038 0.092 1.330">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.056 0.083 1.350">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.071 0.071 1.370">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.083 0.056 1.390">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.092 0.038 1.410">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.098 0.020 1.430">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.100 0.000 1.450">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.098 -0.020 1.470">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.092 -0.038 1.490">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.083 -0.056 1.510">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.071 -0.071 1.530">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.056 -0.083 1.550">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.038 -0.092 1.570">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.020 -0.098 1.590">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.000 -0.100 1.610">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.020 -0.098 1.630">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.038 -0.092 1.650">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.056 -0.083 1.670">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.071 -0.071 1.690">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.083 -0.056 1.710">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.092 -0.038 1.730">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.098 -0.020 1.750">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.100 -0.000 1.770">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.098 0.020 1.790">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.092 0.038 1.810">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.083 0.056 1.830">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.071 0.071 1.850">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.056 0.083 1.870">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.038 0.092 1.890">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.020 0.098 1.910">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="-0.000 0.100 1.930">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.020 0.098 1.950">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.038 0.092 1.970">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+    <body pos="0.056 0.083 1.990">
+      <freejoint/>
+      <geom type="capsule" fromto="0 0 0 0.05 0 0 " size="0.01"/>
+    </body>
+  </worldbody>
+</mujoco>

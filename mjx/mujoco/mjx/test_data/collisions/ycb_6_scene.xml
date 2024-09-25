@@ -1,0 +1,36 @@
+<mujoco model="ycb_scene">
+  <include file="ycb_6.xml"/>
+
+  <option iterations="8" ls_iterations="8" timestep="0.001">
+    <flag eulerdamp="disable"/>
+  </option>
+
+  <custom>
+    <numeric data="10" name="max_contact_points"/>
+    <numeric data="10" name="max_geom_pairs"/>
+  </custom>
+
+  <asset>
+    <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="3072"/>
+    <texture type="2d" name="groundplane" builtin="checker" mark="edge" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3"
+      markrgb="0.8 0.8 0.8" width="300" height="300"/>
+    <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.2"/>
+  </asset>
+
+  <statistic center="0 0 0.1" extent="0.4" meansize="0.02"/>
+
+  <visual>
+    <headlight diffuse="0.6 0.6 0.6" ambient="0.3 0.3 0.3" specular="0 0 0"/>
+    <rgba haze="0.15 0.25 0.35 1"/>
+    <global azimuth="120" elevation="-10"/>
+  </visual>
+
+  <worldbody>
+    <light pos="0 0 1.5" directional="true"/>
+    <geom name="floor" size="0 0 0.05" type="plane" material="groundplane"/>
+  </worldbody>
+
+  <keyframe>
+    <key name="home" qpos='-0.0713624 0.0384348 0.00351428 0.999981 -0.000556703 -0.0006886 0.00609785 -0.072948 -0.0243177 0.0475691 -0.127556 0.133469 -0.980315 -0.0699815 -0.0497884 -0.00028389 0.0524571 0.964415 -0.144229 0.219353 0.031389 -0.0764433 -0.0792599 0.00790672 0.983408 0.160065 0.0190218 0.0832251 -0.112964 -0.011825 0.0578971 -0.297218 0.917357 0.080153 -0.252374 -0.0951332 -0.0474707 0.0854197 -0.547405 0.81005 -0.0652937 0.19976'/>
+  </keyframe>
+</mujoco>
