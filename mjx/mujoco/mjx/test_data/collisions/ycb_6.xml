@@ -106,7 +106,7 @@
   </asset>
 
   <default>
-    <mesh maxhullvert="64"/>
+    <mesh maxhullvert="32"/>
     <default class="024_bowl">
       <default class="visual_024_bowl">
         <geom type="mesh" group="2" density="200" contype="0" conaffinity="0" material="bowl_texture"/>
