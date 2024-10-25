@@ -113,6 +113,11 @@ _COLLISION_FUNC = {
 _GEOM_NO_BROADPHASE = {GeomType.HFIELD, GeomType.PLANE}
 
 
+def has_cuda_device_enabled():
+  dev = jax.devices()[0]
+  return 'gpu' == dev.platform and 'cuda' in dev.client.platform_version.lower()
+
+
 def has_collision_fn(t1: GeomType, t2: GeomType) -> bool:
   """Returns True if a collision function exists for a pair of geom types."""
   return (t1, t2) in _COLLISION_FUNC
@@ -379,6 +384,26 @@ def collision(m: Model, d: Data) -> Data:
 
   max_geom_pairs = _numeric(m, 'max_geom_pairs')
   max_contact_points = _numeric(m, 'max_contact_points')
+
+  if (
+      has_cuda_device_enabled()
+      and os.environ.get('MJX_CUDA_COLLISION_FULL', 'False').lower() == 'true'
+  ):
+    import logging  # pylint: disable=g-import-not-at-top
+    from mujoco.mjx._src.cuda import engine_collision_driver  # pylint: disable=g-import-not-at-top
+
+    logging.info('Using full CUDA collision pipeline.')
+    contact = engine_collision_driver.collision(
+        m,
+        d,
+        depth_extension=0.25,
+        gjk_iter=12,
+        epa_iter=12,
+        epa_best_count=12,
+        multi_polygon_count=8,
+        multi_tilt_angle=1.0,
+    )
+    return d.replace(contact=contact)
 
   # run collision functions on groups
   groups = _contact_groups(m, d)
