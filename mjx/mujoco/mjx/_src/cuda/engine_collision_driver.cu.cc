@@ -27,7 +27,10 @@
 #include "engine_collision_common.h"  // mjx/cuda
 #include "engine_collision_convex.h"  // mjx/cuda
 #include "engine_util_blas.cu.h"  // mjx/cuda
+#include <xla/ffi/api/c_api.h>
+#include <driver_types.h>
 #include <xla/ffi/api/ffi.h>
+#include <thrust/swap.h>
 
 namespace mujoco::mjx::cuda {
 
@@ -332,7 +335,7 @@ __global__ void get_geom_pairs_nxn(
         continue;
       }
 
-      if (type1 > type2) std::swap(geom1, geom2);
+      if (type1 > type2) thrust::swap(geom1, geom2);
       const int pair_id = atomicAdd(&col_geom_pair_count[env_id], 1);
       col_geom_pair[(env_id * n_geom_pair + pair_id) * 2] = geom1;
       col_geom_pair[(env_id * n_geom_pair + pair_id) * 2 + 1] = geom2;
