@@ -23,11 +23,14 @@
 #include <cstdio>
 #include <string>
 
+#include <cuda_runtime_api.h>  // cuda
 #include <driver_types.h>  // cuda
-#include <vector_types.h>  // cuda
 #include <helper_math.h>  // cuda_samples
+#include <mujoco/mujoco.h>
 #include "engine_collision_common.h"  // mjx/cuda
+#include "engine_collision_convex.h"  // mjx/cuda
 #include "engine_util_blas.cu.h"  // mjx/cuda
+#include <xla/ffi/api/c_api.h>
 #include <xla/ffi/api/ffi.h>
 
 namespace mujoco::mjx::cuda {
