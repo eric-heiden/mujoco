@@ -15,6 +15,8 @@
 #ifndef MUJOCO_PYTHON_MJX_CUDA_ENGINE_UTIL_BLAS_CU_H_
 #define MUJOCO_PYTHON_MJX_CUDA_ENGINE_UTIL_BLAS_CU_H_
 
+#include <cstring>
+
 namespace mujoco::mjx::cuda {
 
 #define FULL_MASK 0xFFFFFFFF
@@ -56,29 +58,6 @@ inline __device__ float3 sign(float3 x) {
   return make_float3(sign(x.x), sign(x.y), sign(x.z));
 }
 
-// ----------------------------- Multiplication. -------------------------------
-inline __device__ float3 operator*(const float& a, const float3& b) {
-  return make_float3(a * b.x, a * b.y, a * b.z);
-}
-
-inline __device__ float3 operator*(const float3& a, const float& b) {
-  return make_float3(b * a.x, b * a.y, b * a.z);
-}
-
-inline __device__ float3 operator*(const float3& a, const float3& b) {
-  return make_float3(a.x * b.x, a.y * b.y, a.z * b.z);
-}
-
-inline __device__ float3 operator*(const float3& a, const float4& b) {
-  return make_float3(a.x * b.x, a.y * b.y, a.z * b.z);
-}
-
-inline __device__ void operator*=(float3& a, const float3& b) {
-  a.x *= b.x;
-  a.y *= b.y;
-  a.z *= b.z;
-}
-
 // ------------------------ Matrix Multiplication. -----------------------------
 
 // multiply 3-by-3 matrix by vector
@@ -102,17 +81,6 @@ __forceinline__ __device__ void mulMatTVec3(float3& res, const float4* mat,
   res.x = mat[0].x * vec.x + mat[1].x * vec.y + mat[2].x * vec.z;
   res.y = mat[0].y * vec.x + mat[1].y * vec.y + mat[2].y * vec.z;
   res.z = mat[0].z * vec.x + mat[1].z * vec.y + mat[2].z * vec.z;
-}
-
-// ----------------------------- Dot product. ----------------------------------
-__forceinline__ __device__ float dot(const float3& a, const float3& b) {
-  return a.x * b.x + a.y * b.y + a.z * b.z;
-}
-
-// ----------------------------- Cross product. --------------------------------
-__forceinline__ __device__ float3 cross(const float3& a, const float3& b) {
-  return make_float3(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z,
-                     a.x * b.y - a.y * b.x);
 }
 
 // ----------------------------- Normalize. ------------------------------------

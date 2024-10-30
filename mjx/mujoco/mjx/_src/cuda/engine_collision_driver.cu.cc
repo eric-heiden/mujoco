@@ -18,19 +18,19 @@
 #include <thrust/device_vector.h>
 #include <thrust/execution_policy.h>
 #include <thrust/reduce.h>
+#include <thrust/swap.h>
 
 #include <cstdio>
 
 #include <cuda_runtime_api.h>  // cuda
+#include <driver_types.h>  // cuda
 #include <helper_math.h>  // cuda_samples
 #include <mujoco/mujoco.h>
 #include "engine_collision_common.h"  // mjx/cuda
 #include "engine_collision_convex.h"  // mjx/cuda
 #include "engine_util_blas.cu.h"  // mjx/cuda
 #include <xla/ffi/api/c_api.h>
-#include <driver_types.h>
 #include <xla/ffi/api/ffi.h>
-#include <thrust/swap.h>
 
 namespace mujoco::mjx::cuda {
 

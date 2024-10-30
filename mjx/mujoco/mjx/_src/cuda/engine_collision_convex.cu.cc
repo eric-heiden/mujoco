@@ -23,14 +23,11 @@
 #include <cstdio>
 #include <string>
 
-#include <cuda_runtime_api.h>  // cuda
 #include <driver_types.h>  // cuda
+#include <vector_types.h>  // cuda
 #include <helper_math.h>  // cuda_samples
-#include <mujoco/mujoco.h>
 #include "engine_collision_common.h"  // mjx/cuda
-#include "engine_collision_convex.h"  // mjx/cuda
 #include "engine_util_blas.cu.h"  // mjx/cuda
-#include <xla/ffi/api/c_api.h>
 #include <xla/ffi/api/ffi.h>
 
 namespace mujoco::mjx::cuda {
@@ -64,13 +61,13 @@ __device__ __forceinline__ void xposmat_to_float4(const float* xpos,
 }  // namespace
 
 template <class T>
-__host__ __device__ __forceinline__ T
+__device__ __forceinline__ T
 get_info(const float* __restrict size, const int gid, const int dataid,
          const uint* __restrict convex_vert_offset, const float* xpos,
          const float* xmat);
 
 template <>
-__host__ __device__ __forceinline__ GeomType_PLANE get_info<GeomType_PLANE>(
+__device__ __forceinline__ GeomType_PLANE get_info<GeomType_PLANE>(
     const float* __restrict size, const int gid, const int dataid,
     const uint* __restrict convex_vert_offset, const float* xpos,
     const float* xmat) {
@@ -80,7 +77,7 @@ __host__ __device__ __forceinline__ GeomType_PLANE get_info<GeomType_PLANE>(
 }
 
 template <>
-__host__ __device__ __forceinline__ GeomType_SPHERE get_info<GeomType_SPHERE>(
+__device__ __forceinline__ GeomType_SPHERE get_info<GeomType_SPHERE>(
     const float* __restrict size, const int gid, const int dataid,
     const uint* __restrict convex_vert_offset, const float* xpos,
     const float* xmat) {
@@ -91,7 +88,7 @@ __host__ __device__ __forceinline__ GeomType_SPHERE get_info<GeomType_SPHERE>(
 }
 
 template <>
-__host__ __device__ __forceinline__ GeomType_CAPSULE get_info<GeomType_CAPSULE>(
+__device__ __forceinline__ GeomType_CAPSULE get_info<GeomType_CAPSULE>(
     const float* __restrict size, const int gid, const int dataid,
     const uint* __restrict convex_vert_offset, const float* xpos,
     const float* xmat) {
@@ -103,7 +100,7 @@ __host__ __device__ __forceinline__ GeomType_CAPSULE get_info<GeomType_CAPSULE>(
 }
 
 template <>
-__host__ __device__ __forceinline__ GeomType_ELLIPSOID
+__device__ __forceinline__ GeomType_ELLIPSOID
 get_info<GeomType_ELLIPSOID>(const float* __restrict size, const int gid,
                              const int dataid,
                              const uint* __restrict convex_vert_offset,
@@ -115,7 +112,7 @@ get_info<GeomType_ELLIPSOID>(const float* __restrict size, const int gid,
 }
 
 template <>
-__host__ __device__ __forceinline__ GeomType_CYLINDER
+__device__ __forceinline__ GeomType_CYLINDER
 get_info<GeomType_CYLINDER>(const float* __restrict size, const int gid,
                             const int dataid,
                             const uint* __restrict convex_vert_offset,
@@ -128,7 +125,7 @@ get_info<GeomType_CYLINDER>(const float* __restrict size, const int gid,
 }
 
 template <>
-__host__ __device__ __forceinline__ GeomType_BOX get_info<GeomType_BOX>(
+__device__ __forceinline__ GeomType_BOX get_info<GeomType_BOX>(
     const float* __restrict size, const int gid, const int dataid,
     const uint* __restrict convex_vert_offset, const float* xpos,
     const float* xmat) {
@@ -139,7 +136,7 @@ __host__ __device__ __forceinline__ GeomType_BOX get_info<GeomType_BOX>(
 }
 
 template <>
-__host__ __device__ __forceinline__ GeomType_CONVEX get_info<GeomType_CONVEX>(
+__device__ __forceinline__ GeomType_CONVEX get_info<GeomType_CONVEX>(
     const float* __restrict size, const int gid, const int dataid,
     const uint* __restrict convex_vert_offset, const float* xpos,
     const float* xmat) {
@@ -157,12 +154,12 @@ __host__ __device__ __forceinline__ GeomType_CONVEX get_info<GeomType_CONVEX>(
 // Returns the distance from the support point to the origin. The support point
 // is the point on the surface of the object in the direction of `dir`.
 template <class T>
-__host__ __device__ __forceinline__ float gjk_support(
+__device__ __forceinline__ float gjk_support(
     const T& info, const float3& dir, const float* __restrict convex_vert,
     float3& support_pt);
 
 template <>
-__host__ __device__ __forceinline__ float gjk_support<GeomType_PLANE>(
+__device__ __forceinline__ float gjk_support<GeomType_PLANE>(
     const GeomType_PLANE& info, const float3& dir,
     const float* __restrict convex_vert, float3& support_pt) {
   float3 local_dir;
@@ -179,7 +176,7 @@ __host__ __device__ __forceinline__ float gjk_support<GeomType_PLANE>(
 }
 
 template <>
-__host__ __device__ __forceinline__ float gjk_support<GeomType_SPHERE>(
+__device__ __forceinline__ float gjk_support<GeomType_SPHERE>(
     const GeomType_SPHERE& info, const float3& dir,
     const float* __restrict convex_vert, float3& support_pt) {
   float3 xpos = make_float3(info.mat[0].w, info.mat[1].w, info.mat[2].w);
@@ -188,7 +185,7 @@ __host__ __device__ __forceinline__ float gjk_support<GeomType_SPHERE>(
 }
 
 template <>
-__host__ __device__ __forceinline__ float gjk_support<GeomType_CAPSULE>(
+__device__ __forceinline__ float gjk_support<GeomType_CAPSULE>(
     const GeomType_CAPSULE& info, const float3& dir,
     const float* __restrict convex_vert, float3& support_pt) {
   float3 local_dir;
@@ -204,7 +201,7 @@ __host__ __device__ __forceinline__ float gjk_support<GeomType_CAPSULE>(
 }
 
 template <>
-__host__ __device__ __forceinline__ float gjk_support<GeomType_ELLIPSOID>(
+__device__ __forceinline__ float gjk_support<GeomType_ELLIPSOID>(
     const GeomType_ELLIPSOID& info, const float3& dir,
     const float* __restrict convex_vert, float3& support_pt) {
   float3 local_dir;
@@ -222,7 +219,7 @@ __host__ __device__ __forceinline__ float gjk_support<GeomType_ELLIPSOID>(
 }
 
 template <>
-__host__ __device__ __forceinline__ float gjk_support<GeomType_CYLINDER>(
+__device__ __forceinline__ float gjk_support<GeomType_CYLINDER>(
     const GeomType_CYLINDER& info, const float3& dir,
     const float* __restrict convex_vert, float3& support_pt) {
   float3 local_dir;
@@ -245,7 +242,7 @@ __host__ __device__ __forceinline__ float gjk_support<GeomType_CYLINDER>(
 }
 
 template <>
-__host__ __device__ __forceinline__ float gjk_support<GeomType_BOX>(
+__device__ __forceinline__ float gjk_support<GeomType_BOX>(
     const GeomType_BOX& info, const float3& dir,
     const float* __restrict convex_vert, float3& support_pt) {
   float3 local_dir;
@@ -258,7 +255,7 @@ __host__ __device__ __forceinline__ float gjk_support<GeomType_BOX>(
 }
 
 template <>
-__host__ __device__ __forceinline__ float gjk_support<GeomType_CONVEX>(
+__device__ __forceinline__ float gjk_support<GeomType_CONVEX>(
     const GeomType_CONVEX& info, const float3& dir,
     const float* __restrict convex_vert, float3& support_pt) {
   float3 local_dir;
@@ -287,7 +284,7 @@ __host__ __device__ __forceinline__ float gjk_support<GeomType_CONVEX>(
 // means objects are not intersecting along direction `dir`. Positive distance
 // means objects are intersecting along the given direction `dir`.
 template <class T1, class T2>
-__host__ __device__ __forceinline__ float gjk_support(
+__device__ __forceinline__ float gjk_support(
     const T1& info1, const T2& info2, const float3& dir,
     const float* __restrict convex_vert, float3& support_pt) {
   float3 s1, s2;
@@ -299,7 +296,7 @@ __host__ __device__ __forceinline__ float gjk_support(
   return (dist1 + dist2);
 }
 
-__forceinline__ __host__ __device__ bool gjk_normalize(float3& a) {
+__forceinline__ __device__ bool gjk_normalize(float3& a) {
   float norm = sqrtf(a.x * a.x + a.y * a.y + a.z * a.z);
   if ((norm > 1e-8f) && (norm < 1e12f)) {
     a /= norm;
@@ -334,7 +331,7 @@ __global__ void gjk_epa_init(const uint npair, const uint nenv, const int ncon,
 
 // Calculates whether two objects intersect.
 template <class T1, class T2>
-__host__ __device__ __forceinline__ void _gjk(
+__device__ __forceinline__ void _gjk(
     const uint tid, const uint env_id, const uint model_id, const int g1,
     const int g2, const uint ngeom, const float* __restrict size,
     const float* __restrict xpos, const float* __restrict xmat,
@@ -472,7 +469,7 @@ __global__ void gjk_dense(
 // NOTE: depth_extension should be > 0. If exactly 0, we may miss
 // contacts when the origin is on the surface of the initial simplex.
 template <class T1, class T2>
-__host__ __device__ __forceinline__ void _epa(
+__device__ __forceinline__ void _epa(
     const uint tid, const uint env_id, const uint model_id, const int g1,
     const int g2, const uint ngeom, const uint ncon,
     const float* __restrict size, const float* xpos, const float* xmat,
@@ -668,7 +665,7 @@ __global__ void epa_dense(
 //    direction of eigenvectors of the variance of points of each polygon. If
 //    they do not intersect, the closest points of both polygons are found.
 template <class T1, class T2>
-__host__ __device__ __forceinline__ void _get_multiple_contacts(
+__device__ __forceinline__ void _get_multiple_contacts(
     const uint tid, const uint env_id, const uint model_id, const int g1,
     const int g2, const uint ngeom, const uint ncon,
     const float* __restrict size, const float* __restrict xpos,
