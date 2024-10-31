@@ -8,7 +8,9 @@ cd git
 
 git clone https://github.com/NVIDIA/cuda-samples
 git clone https://github.com/openxla/xla
-git clone https://github.com/google-deepmind/mujoco
+git clone https://github.com/btaba/mujoco.git
+cd mujoco
+git checkout warp-collisions
 
 pip install mujoco
 # for pybind
