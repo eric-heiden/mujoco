@@ -1,0 +1,28 @@
+# Conversion of CUDA collision pipeline to Warp
+
+See [Warp apagom branch](https://github.com/eric-heiden/warp/tree/apagom).
+
+Currently CUDA collision pipeline exposes the following functions:
+* `bvh_aabb_dyn`
+* `broad_phase_nxn`
+* `broad_phase_sort`
+* `gjk_epa`
+
+ToDo's:
+-------
+
+1. Find out where tests are to compare MJX and MuJoCo
+2. Unit tests for narrowphase
+3. Unit tests for broadphase
+4. Separate FFI from collision code (Warp doesn't need XLA FFI bindings)
+5. Break down narrowphase kernels to Warp
+    5.1. Sphere support functions
+    5.2. Add GJK for sphere-sphere collision, compute contact points, normal
+    5.3. Expose Warp GJK for sphere-sphere collision as `gjk_epa` in MJX collision pipeline, using brute-force broad phase
+    5.4. Support function for box
+    5.5. Implement EPA in Warp
+    5.6. Expose EPA + GJK in Warp as `gjk_epa` in MJX collision pipeline
+    5.7. Add more support functions
+6. Implement `bvh_aabb_dyn` in Warp
+7. Implement `broad_phase_nxn` in Warp
+8. Implement `broad_phase_sort` in Warp
